@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "489471024064",
+    "project_id": "fello-60660",
+    "storage_bucket": "fello-60660.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489471024064:android:7b7f74391968d2a7658625",
+        "android_client_info": {
+          "package_name": "com.example.fello"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtdleYDBtRCwtlY_J4g01ZhOcXjD_Xeqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
