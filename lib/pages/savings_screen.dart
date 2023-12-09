@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dashed_circular_progress_bar/dashed_circular_progress_bar.dart';
+import 'package:date_format/date_format.dart';
 import 'package:fello/components/goal_card.dart';
 import 'package:fello/components/my_button.dart';
 import 'package:fello/components/my_input.dart';
@@ -24,6 +25,16 @@ class _SavingsScreenState extends State<SavingsScreen> {
   final _firestore = FirebaseFirestore.instance;
   final _payController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  final categories = [
+    'Personal',
+    'Gadget',
+    'Travel',
+    'Investment',
+    'Health',
+    'House',
+    'Education'
+  ];
 
   void payAmount(String uid) async {
     if (_formKey.currentState!.validate()) {
@@ -95,6 +106,7 @@ class _SavingsScreenState extends State<SavingsScreen> {
                       .collection('users')
                       .doc(_auth.currentUser!.uid)
                       .collection('goals')
+                      .orderBy('timestamp', descending: true)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
@@ -114,6 +126,7 @@ class _SavingsScreenState extends State<SavingsScreen> {
                         );
                       } else {
                         var goalsData = snapshot.data!.docs;
+
                         return PageView.builder(
                           itemCount: snapshot.data!.docs.length,
                           controller: PageController(viewportFraction: 0.75),
@@ -124,6 +137,10 @@ class _SavingsScreenState extends State<SavingsScreen> {
                                 ValueNotifier(0);
                             final total = goalsData[_index].data()['amount'];
                             final paid = goalsData[_index].data()['paid'];
+                            var category = goalsData[_index].data()['category'];
+                            if (!categories.contains(category)) {
+                              category = 'other';
+                            }
                             return AnimatedPadding(
                               duration: const Duration(milliseconds: 400),
                               curve: Curves.fastOutSlowIn,
@@ -134,10 +151,13 @@ class _SavingsScreenState extends State<SavingsScreen> {
                                 width: width,
                                 child: Column(
                                   children: [
-                                    Image.asset(
-                                      'assets/images/car.jpg',
-                                      width: 200,
-                                      height: 200,
+                                    Padding(
+                                      padding: const EdgeInsets.all(24.0),
+                                      child: Image.asset(
+                                        'assets/images/${category}.png',
+                                        width: 100,
+                                        height: 100,
+                                      ),
                                     ),
                                     Text(
                                       goalsData[_index].data()['title'],

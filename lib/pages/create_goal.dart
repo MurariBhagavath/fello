@@ -172,7 +172,7 @@ class _CreateGoalScreenState extends State<CreateGoalScreen> {
                   children: List.generate(
                     categories.length,
                     (index) => ChoiceChip(
-                      label: Text('₹' + categories[index].toString()),
+                      label: Text(categories[index].toString()),
                       selected: _category == index,
                       onSelected: (bool selected) {
                         setState(() {
